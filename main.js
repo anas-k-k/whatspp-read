@@ -24,21 +24,15 @@ client.on("ready", () => {
 });
 
 // Load system prompt once
-const promptPath = path.join(
-  __dirname,
-  "..",
-  "Udemy-Training",
-  "Lab1",
-  "chembys_system_prompt.txt"
-);
+const promptPath = path.join(__dirname, "prompts", "chembys_system_prompt.txt");
 const systemPrompt = fs.readFileSync(promptPath, "utf8");
 
 // Prepare OpenAI client once
-const geminiApiKey = process.env.GEMINI_API_KEY;
-const openai = geminiApiKey
+const openApiKey = process.env.OPENAI_API_KEY;
+const openai = openApiKey
   ? new OpenAI({
-      apiKey: geminiApiKey,
-      baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+      apiKey: openApiKey,
+      baseURL: "https://api.openai.com/v1",
     })
   : null;
 
@@ -50,19 +44,14 @@ client.on("message", async (message) => {
   console.log(`From: ${message.from}`);
   console.log(`To: ${message.to}`);
   console.log(`Body: ${message.body}`);
-  // Only reply if sender is in the allowed numbers list
-  const allowedNumbers = ["919847168947", "919207489258", "919995320423"];
-  const isAllowed = allowedNumbers.some((num) =>
-    message.from.startsWith(num + "@")
-  );
-  if (isAllowed) {
+  // Only reply if chat type is personal (not group)
+  const chat = await message.getChat();
+  console.log(`Chat type: ${chat.isGroup ? "Group" : "Private"}`);
+  if (!chat.isGroup) {
     try {
-      const chat = await message.getChat();
-      console.log(`Chat type: ${chat.isGroup ? "Group" : "Private"}`);
-
-      if (!geminiApiKey || !openai) {
+      if (!openApiKey || !openai) {
         await message.reply(
-          "Gemini API Key not set. Please check server config."
+          "OpenAI API Key not set. Please check server config."
         );
         return;
       }
@@ -94,7 +83,7 @@ client.on("message", async (message) => {
       let llmResponse;
       try {
         const response = await openai.chat.completions.create({
-          model: "gemini-2.0-flash",
+          model: "gpt-4-1106-preview",
           messages: chatHistories[userKey],
         });
         llmResponse = response.choices[0].message.content;
