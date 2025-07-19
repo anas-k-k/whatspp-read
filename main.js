@@ -5,6 +5,41 @@ const path = require("path");
 require("dotenv").config();
 const { OpenAI } = require("openai");
 
+// Import templates for identifier replacement
+const templates = require("./template.js");
+
+// Function to replace placeholders in LLM response with values from template.js
+function replacePlaceholders(text) {
+  if (!text) return text;
+  // Replace simple placeholders: {{IDENTIFIER}}
+  text = text.replace(/\{\{([A-Z_]+)\}\}/g, (match, key) => {
+    if (typeof templates[key] === "string") {
+      return templates[key];
+    }
+    return match;
+  });
+  // Replace PINCODE_MISMATCH: {{PINCODE_MISMATCH:CityName}}
+  text = text.replace(/\{\{PINCODE_MISMATCH:([^}]+)\}\}/g, (match, city) => {
+    if (typeof templates.PINCODE_MISMATCH === "function") {
+      return templates.PINCODE_MISMATCH(city.trim());
+    }
+    return match;
+  });
+  // Replace ORDER_CONFIRM: {{ORDER_CONFIRM:{...}}}
+  text = text.replace(/\{\{ORDER_CONFIRM:({[^}]+})\}\}/g, (match, jsonStr) => {
+    try {
+      const obj = JSON.parse(jsonStr);
+      if (typeof templates.ORDER_CONFIRM === "function") {
+        return templates.ORDER_CONFIRM(obj);
+      }
+    } catch (e) {
+      return match;
+    }
+    return match;
+  });
+  return text;
+}
+
 const logStream = fs.createWriteStream("app.log", { flags: "a" });
 process.on("uncaughtException", (err) => {
   logStream.write(
@@ -104,11 +139,13 @@ client.on("message", async (message) => {
           messages: chatHistories[userKey],
         });
         llmResponse = response.choices[0].message.content;
-        // Add assistant reply to history
+        // Add assistant reply to history (keep original, with identifiers)
         chatHistories[userKey].push({
           role: "assistant",
           content: llmResponse,
         });
+        // Replace placeholders for outgoing reply only
+        llmResponse = replacePlaceholders(llmResponse);
       } catch (llmErr) {
         console.error("Error from LLM:", llmErr);
         if (typingStarted) await chat.clearState();
