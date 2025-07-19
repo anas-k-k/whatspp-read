@@ -5,6 +5,18 @@ const path = require("path");
 require("dotenv").config();
 const { OpenAI } = require("openai");
 
+const logStream = fs.createWriteStream("app.log", { flags: "a" });
+process.on("uncaughtException", (err) => {
+  logStream.write(
+    `[${new Date().toISOString()}] Uncaught: ${err.stack || err}\n`
+  );
+});
+process.on("unhandledRejection", (err) => {
+  logStream.write(
+    `[${new Date().toISOString()}] Unhandled: ${err.stack || err}\n`
+  );
+});
+
 // Create a new client instance with persistent authentication
 const client = new Client({
   authStrategy: new LocalAuth(),
@@ -48,8 +60,13 @@ client.on("message", async (message) => {
   const chat = await message.getChat();
   console.log(`Chat type: ${chat.isGroup ? "Group" : "Private"}`);
   if (!chat.isGroup) {
+    // Show typing indication as early as possible
+    let typingStarted = false;
     try {
+      await chat.sendStateTyping();
+      typingStarted = true;
       if (!openApiKey || !openai) {
+        if (typingStarted) await chat.clearState();
         await message.reply(
           "OpenAI API Key not set. Please check server config."
         );
@@ -94,14 +111,19 @@ client.on("message", async (message) => {
         });
       } catch (llmErr) {
         console.error("Error from LLM:", llmErr);
+        if (typingStarted) await chat.clearState();
         await message.reply("Sorry, there was an error generating a response.");
         return;
       }
 
       // Reply with LLM response
+      if (typingStarted) await chat.clearState();
       await message.reply(llmResponse);
     } catch (err) {
       console.error("Error while replying:", err);
+      try {
+        if (typingStarted) await chat.clearState();
+      } catch (e) {}
     }
   } else {
     console.log("Not a direct chat. No reply sent.");
