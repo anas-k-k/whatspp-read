@@ -85,6 +85,8 @@ const openai = openApiKey
 
 // In-memory chat history per user
 const chatHistories = {};
+// Track last activity timestamp per user
+const lastActivity = {};
 
 client.on("message", async (message) => {
   console.log("--- New message received ---");
@@ -115,6 +117,8 @@ client.on("message", async (message) => {
 
       // Maintain chat history for this user, with personalized system prompt
       const userKey = message.from;
+      // Update last activity timestamp for this user
+      lastActivity[userKey] = Date.now();
       if (!chatHistories[userKey]) {
         // Replace [Customer Name] in the system prompt
         const personalizedPrompt = systemPrompt.replace(
@@ -169,3 +173,18 @@ client.on("message", async (message) => {
 
 // Start the client
 client.initialize();
+
+// Periodically clear chat history for inactive users (every 1 minute)
+setInterval(() => {
+  const now = Date.now();
+  const INACTIVITY_LIMIT = 10 * 60 * 1000; // 10 minutes in ms
+  for (const userKey in lastActivity) {
+    if (lastActivity.hasOwnProperty(userKey)) {
+      if (now - lastActivity[userKey] > INACTIVITY_LIMIT) {
+        console.log(`Clearing chat history for inactive user: ${userKey}`);
+        delete chatHistories[userKey];
+        delete lastActivity[userKey];
+      }
+    }
+  }
+}, 60 * 1000); // Run every 1 minute
