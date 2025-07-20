@@ -1,9 +1,11 @@
 // config/templates.js
 module.exports = {
-  GREETING_TEMPLATE: (customerName = "there") => `
+  GREETING_TEMPLATE: (customerName = "there", productList = "") => `
 Hi ${customerName},
 Thank you for reaching out to Chembys 💛
-Which product would you like to order?
+Here's our product list for you:
+${productList}
+would you like to know more about any specific product? or order any?
 `,
   USAGE_KASTHURI: `
 For dry skin, mix with milk or curd.

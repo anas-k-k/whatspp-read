@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "dotenv": "^17.2.0",
+    "js-yaml": "^4.1.0",
     "openai": "^5.10.1",
     "puppeteer": "^24.14.0",
     "qrcode-terminal": "^0.12.0",

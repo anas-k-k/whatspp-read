@@ -2,8 +2,10 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const fs = require("fs");
 const path = require("path");
+const yaml = require("js-yaml");
 require("dotenv").config({ override: true });
 const { OpenAI } = require("openai");
+const readline = require("readline");
 
 // Ensure logs directory exists
 const logsDir = path.join(__dirname, "logs");
@@ -79,18 +81,83 @@ client.on("disconnected", (reason) => {
   }, 5000);
 });
 
-// Load system prompt once
+// Load system prompt from YAML and flatten to string
 const promptPath = path.join(__dirname, "prompts", "chembys_system_prompt.txt");
-const systemPrompt = fs.readFileSync(promptPath, "utf8");
+const systemPrompt = yamlToText(promptPath);
 
-// Prepare OpenAI client once
-const openApiKey = process.env.OPENAI_API_KEY;
-const openai = openApiKey
-  ? new OpenAI({
-      apiKey: openApiKey,
-      baseURL: "https://api.openai.com/v1",
-    })
-  : null;
+// --- LLM Provider Selection ---
+let apiProvider = "openai";
+let llmConfig = {};
+let openai = null;
+
+function promptProvider() {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question(
+      "Which API to use? (openai/ollama/gemini) [default: openai]: ",
+      (answer) => {
+        rl.close();
+        const val = answer.trim().toLowerCase();
+        if (["openai", "ollama", "gemini"].includes(val)) {
+          resolve(val);
+        } else {
+          resolve("openai");
+        }
+      }
+    );
+  });
+}
+
+async function setupLlmProvider() {
+  apiProvider = await promptProvider();
+  if (apiProvider === "ollama") {
+    llmConfig = {
+      baseUrl: process.env.OLLAMA_BASE_URL || "http://localhost:11434/v1",
+      apiKey: process.env.OLLAMA_API_KEY || "ollama",
+      model: process.env.OLLAMA_MODEL || "llama3.2:latest",
+    };
+    openai = new OpenAI({
+      apiKey: llmConfig.apiKey,
+      baseURL: llmConfig.baseUrl,
+    });
+    console.log(
+      `Using Ollama (OpenAI compatible): ${llmConfig.baseUrl}, model: ${llmConfig.model}`
+    );
+  } else if (apiProvider === "gemini") {
+    llmConfig = {
+      baseUrl:
+        process.env.GEMINI_BASE_URL ||
+        "https://generativelanguage.googleapis.com/v1beta/openai/",
+      apiKey: process.env.GEMINI_API_KEY,
+      model: process.env.GEMINI_MODEL || "gemini-pro",
+    };
+    openai = new OpenAI({
+      apiKey: llmConfig.apiKey,
+      baseURL: llmConfig.baseUrl,
+    });
+    console.log(
+      `Using Gemini (OpenAI compatible): ${llmConfig.baseUrl}, model: ${llmConfig.model}`
+    );
+  } else {
+    llmConfig = {
+      baseUrl: process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
+      apiKey: process.env.OPENAI_API_KEY,
+      model: process.env.OPENAI_MODEL || "gpt-3.5-turbo",
+    };
+    openai = llmConfig.apiKey
+      ? new OpenAI({
+          apiKey: llmConfig.apiKey,
+          baseURL: llmConfig.baseUrl,
+        })
+      : null;
+    console.log(
+      `Using OpenAI: ${llmConfig.baseUrl}, model: ${llmConfig.model}`
+    );
+  }
+}
 
 // In-memory chat history per user
 const chatHistories = {};
@@ -104,17 +171,19 @@ client.on("message", async (message) => {
   console.log(`Body: ${message.body}`);
   // Only reply if chat type is personal (not group)
   const chat = await message.getChat();
-  console.log(`Chat type: ${chat.isGroup ? "Group" : "Private"}`);
+  // console.log(`Chat type: ${chat.isGroup ? "Group" : "Private"}`);
   if (!chat.isGroup) {
     // Show typing indication as early as possible
     let typingStarted = false;
     try {
       await chat.sendStateTyping();
       typingStarted = true;
-      if (!openApiKey || !openai) {
+      if (!llmConfig.apiKey || (apiProvider === "openai" && !openai)) {
         if (typingStarted) await chat.clearState();
         await message.reply(
-          "OpenAI API Key not set. Please check server config."
+          `${
+            apiProvider === "ollama" ? "Ollama" : "OpenAI"
+          } API Key not set. Please check server config.`
         );
         return;
       }
@@ -122,7 +191,7 @@ client.on("message", async (message) => {
       // Get customer display name
       const contact = await message.getContact();
       const customerName = contact.pushname || contact.name || contact.number;
-      console.log(`Extracted customer name: ${customerName}`);
+      // console.log(`Extracted customer name: ${customerName}`);
 
       // Maintain chat history for this user, with personalized system prompt
       const userKey = message.from;
@@ -132,7 +201,7 @@ client.on("message", async (message) => {
       if (!chatHistories[userKey]) {
         // FIRST INTERACTION: reply with GREETING_TEMPLATE and initialize chat history
         const greetingRaw = templates.GREETING_TEMPLATE
-          ? templates.GREETING_TEMPLATE(customerName)
+          ? templates.GREETING_TEMPLATE(customerName, templates.PRODUCT_LIST)
           : `Hi ${customerName}`;
         const greeting = toWhatsAppMarkdown(greetingRaw);
         if (typingStarted) await chat.clearState();
@@ -162,8 +231,9 @@ client.on("message", async (message) => {
       // Call LLM with full history
       let llmResponse;
       try {
+        // All providers now use OpenAI-compatible API
         const response = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo",
+          model: llmConfig.model,
           messages: chatHistories[userKey],
           temperature: 0,
         });
@@ -199,8 +269,44 @@ client.on("message", async (message) => {
   }
 });
 
-// Start the client
-client.initialize();
+// Main startup
+
+(async () => {
+  await setupLlmProvider();
+  console.log("[DEBUG] Calling client.initialize()...");
+  try {
+    client.initialize();
+    console.log("[DEBUG] client.initialize() called");
+  } catch (initErr) {
+    console.error("[ERROR] Exception during client.initialize():", initErr);
+  }
+})();
+
+// Extra event logging for WhatsApp client
+client.on("auth_failure", (msg) => {
+  console.error("[ERROR] Authentication failure:", msg);
+});
+client.on("change_state", (state) => {
+  console.log(`[DEBUG] Client state changed: ${state}`);
+});
+client.on("loading_screen", (percent, message) => {
+  console.log(`[DEBUG] Loading screen: ${percent}% - ${message}`);
+});
+client.on("error", (err) => {
+  console.error("[ERROR] WhatsApp client error:", err);
+});
+client.on("ws_close", (reason) => {
+  console.error("[ERROR] WhatsApp WebSocket closed:", reason);
+});
+client.on("authenticated", (session) => {
+  console.log("[DEBUG] WhatsApp client authenticated.");
+});
+client.on("ready", () => {
+  console.log("[DEBUG] WhatsApp client ready event fired.");
+});
+
+// Keep process alive (prevent early exit)
+setInterval(() => {}, 1000 * 60 * 60);
 
 // Periodically clear chat history for inactive users (every 1 minute)
 setInterval(() => {
@@ -284,6 +390,25 @@ function toWhatsAppMarkdown(text) {
   // Remove extra asterisks or underscores not used for formatting
   // (optional, can be refined if needed)
   return text;
+}
+
+function yamlToText(filePath) {
+  const yamlData = yaml.load(fs.readFileSync(filePath, "utf8"));
+
+  // Simple flattening logic (customize based on your YAML structure)
+  let text = "";
+  for (const key in yamlData) {
+    if (typeof yamlData[key] === "string") {
+      text += `${yamlData[key]}\n\n`;
+    } else if (Array.isArray(yamlData[key])) {
+      text += yamlData[key].join("\n") + "\n\n";
+    } else if (typeof yamlData[key] === "object") {
+      for (const subkey in yamlData[key]) {
+        text += `${yamlData[key][subkey]}\n\n`;
+      }
+    }
+  }
+  return text.trim();
 }
 
 // --- TEST: verify GREETING_TEMPLATE replacement ---
