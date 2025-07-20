@@ -1,15 +1,21 @@
+// config/templates.js
 module.exports = {
+  GREETING_TEMPLATE: (customerName = "there") => `
+Hi ${customerName},
+Thank you for reaching out to Chembys 💛
+Which product would you like to order?
+`,
   USAGE_KASTHURI: `
 For dry skin, mix with milk or curd.
 For oily skin, use rose water or aloe vera.
-For sensitive skin, use with sandalwood + rose water.
-Apply after sunset, leave for 15–20 mins, and rinse (no soap).
-Use 2–3 times a week.
+For sensitive skin, use with red sandalwood powder + rose water.
+Apply after sunset, leave for 15-20 mins, and rinse with plain water (no soap).
+Use 5 times in first week, after that weekly 2-3 times.
 Always do a patch test first.
 `,
 
   USAGE_CARROT: `
-Apply 4–5 drops to clean skin and massage in circular motion.
+Apply 4-5 drops to clean skin and massage in circular motion.
 Leave overnight and wash in the morning.
 For hair, apply to scalp and ends, leave 30 mins, and shampoo.
 Brightens skin, fades tan, and is non-sticky.
@@ -17,9 +23,9 @@ Brightens skin, fades tan, and is non-sticky.
 
   CANCEL_TEMPLATE: `
 Hi! 😊 Our products are not like regular cosmetics.
-We grow the ingredients on our own farm in Wayanad and make everything by hand in small batches.
+We grow the ingredients on our own farm in Wayanad, Kerala and make everything by hand in small batches.
 It's 100% chemical-free and follows a 200-year-old traditional formula.
-Please think again before cancelling – we put so much care into every bottle just for you. ❤️
+Please think again before cancelling - we put so much care into every bottle just for you. ❤️
 `,
 
   PINCODE_MISMATCH: (city) => `
@@ -27,15 +33,42 @@ It looks like the pincode doesn’t match the city/area: ${city}.
 Could you please double-check the pincode so we can ensure proper delivery? 😊
 `,
 
-  ORDER_CONFIRM: ({ name, phone, address, amount, product }) => `
-Thanks for sharing!
+  ORDER_CONFIRM: ({
+    name,
+    phone,
+    address,
+    items,
+    totalAmount,
+    paymentMode,
+  }) => {
+    const codCharge = paymentMode.toLowerCase() === "cod" ? 30 : 0;
+    const finalAmount = totalAmount + codCharge;
+
+    return `
+Thanks for sharing your details!
 📍 Name: ${name}
 📞 Phone: ${phone}
 🏠 Address: ${address}
 
-Please pay ₹${amount} for ${product} via Google Pay to: +91 9656190290
-Once done, kindly send a screenshot so we can confirm your order.
-`,
+🛍️ Order Summary:
+${items
+  .map((item) => `• ${item.productName} × ${item.quantity} = ₹${item.amount}`)
+  .join("\n")}
+
+${paymentMode.toLowerCase() === "cod" ? "🔒 COD Charge: ₹30" : ""}
+💰 Total Amount: ₹${finalAmount} (${paymentMode.toUpperCase()})
+
+${
+  paymentMode.toLowerCase() === "cod"
+    ? "No need to pay now. Please keep ₹" +
+      finalAmount +
+      " ready at delivery 📦"
+    : "Please pay ₹" +
+      finalAmount +
+      " via Google Pay to: +91 9656190290\nOnce done, kindly send a screenshot so we can confirm your order."
+}
+`;
+  },
 
   PRODUCT_LIST: `
 *SKIN CARE PRODUCTS*
@@ -72,8 +105,8 @@ Here are some suggestions that work great for different concerns:
   PAYMENT_INSTRUCTIONS: `
 Great! How would you like to pay?
 We support:
-• Google Pay - no extra cost
-• Cash on Delivery - ₹30 extra applies
+• Google Pay – no extra cost
+• Cash on Delivery – ₹30 extra applies
 
 Can I collect your full billing details?
 `,

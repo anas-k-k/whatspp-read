@@ -60,10 +60,23 @@ client.on("qr", (qr) => {
 });
 
 // Log when client is ready
+
 client.on("ready", () => {
   console.log(
     "Client is ready! You should now be able to send and receive messages."
   );
+});
+
+// Handle disconnects and attempt to reconnect
+client.on("disconnected", (reason) => {
+  console.error(`Client disconnected. Reason: ${reason}`);
+  // Wait 5 seconds before attempting to re-initialize
+  setTimeout(() => {
+    console.log(
+      "Attempting to re-initialize WhatsApp client after disconnect..."
+    );
+    client.initialize();
+  }, 5000);
 });
 
 // Load system prompt once
