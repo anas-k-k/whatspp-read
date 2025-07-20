@@ -1,0 +1,275 @@
+[2025-07-20T03:53:51.262Z] Client is ready! You should now be able to send and receive messages.
+[2025-07-20T03:53:58.897Z] --- New message received ---
+[2025-07-20T03:53:58.898Z] From: 919847168947@c.us
+[2025-07-20T03:53:58.899Z] To: 919947551255@c.us
+[2025-07-20T03:53:58.899Z] Body: hi
+[2025-07-20T03:53:58.917Z] Chat type: Private
+[2025-07-20T03:53:59.623Z] Extracted customer name: Anas
+[2025-07-20T03:54:12.110Z] --- New message received ---
+[2025-07-20T03:54:12.113Z] From: 919847168947@c.us
+[2025-07-20T03:54:12.115Z] To: 919947551255@c.us
+[2025-07-20T03:54:12.117Z] Body: need to ordr
+[2025-07-20T03:54:12.190Z] Chat type: Private
+[2025-07-20T03:54:12.555Z] Extracted customer name: Anas
+[2025-07-20T03:54:15.358Z] LLM response: Of course Anas, I’m here to help!  
+Could you please tell me which Chembys product you’d like to order?
+[2025-07-20T03:54:29.689Z] --- New message received ---
+[2025-07-20T03:54:29.691Z] From: 919847168947@c.us
+[2025-07-20T03:54:29.693Z] To: 919947551255@c.us
+[2025-07-20T03:54:29.695Z] Body: products kanikamo?
+[2025-07-20T03:54:29.783Z] Chat type: Private
+[2025-07-20T03:54:30.169Z] Extracted customer name: Anas
+[2025-07-20T03:54:31.788Z] LLM response: Here are our Chembys products:
+
+{{PRODUCT_LIST}}
+
+Let me know which one you’re interested in, Anas!
+[2025-07-20T03:54:45.858Z] --- New message received ---
+[2025-07-20T03:54:45.861Z] From: 919847168947@c.us
+[2025-07-20T03:54:45.863Z] To: 919947551255@c.us
+[2025-07-20T03:54:45.864Z] Body: essential oil venam
+[2025-07-20T03:54:45.951Z] Chat type: Private
+[2025-07-20T03:54:46.229Z] Extracted customer name: Anas
+[2025-07-20T03:54:47.826Z] LLM response: Great choice, Anas! How many packs of the Natural De-Stress Relax Oil would you like to order?
+[2025-07-20T03:55:00.607Z] --- New message received ---
+[2025-07-20T03:55:00.609Z] From: 919847168947@c.us
+[2025-07-20T03:55:00.611Z] To: 919947551255@c.us
+[2025-07-20T03:55:00.613Z] Body: 2
+[2025-07-20T03:55:00.701Z] Chat type: Private
+[2025-07-20T03:55:01.093Z] Extracted customer name: Anas
+[2025-07-20T03:55:02.224Z] LLM response: Thanks, Anas. Could you please share your mobile number for the order?
+[2025-07-20T04:00:17.657Z] Client is ready! You should now be able to send and receive messages.
+[2025-07-20T04:00:23.642Z] --- New message received ---
+[2025-07-20T04:00:23.643Z] From: 919846818557-1486198557@g.us
+[2025-07-20T04:00:23.644Z] To: 919947551255@c.us
+[2025-07-20T04:00:23.644Z] Body: 
+[2025-07-20T04:00:23.683Z] Chat type: Group
+[2025-07-20T04:00:23.685Z] Not a direct chat. No reply sent.
+[2025-07-20T04:00:25.372Z] --- New message received ---
+[2025-07-20T04:00:25.374Z] From: 919847168947@c.us
+[2025-07-20T04:00:25.375Z] To: 919947551255@c.us
+[2025-07-20T04:00:25.376Z] Body: hi
+[2025-07-20T04:00:25.402Z] Chat type: Private
+[2025-07-20T04:00:26.044Z] Extracted customer name: Anas
+[2025-07-20T04:00:34.865Z] --- New message received ---
+[2025-07-20T04:00:34.868Z] From: 919847168947@c.us
+[2025-07-20T04:00:34.870Z] To: 919947551255@c.us
+[2025-07-20T04:00:34.872Z] Body: need to placde order
+[2025-07-20T04:00:34.953Z] Chat type: Private
+[2025-07-20T04:00:35.343Z] Extracted customer name: Anas
+[2025-07-20T04:00:37.947Z] LLM response: Sure, I can help with that, Anas! 😊  
+Could you please let me know the product you'd like to order?
+[2025-07-20T04:00:48.279Z] --- New message received ---
+[2025-07-20T04:00:48.281Z] From: 919847168947@c.us
+[2025-07-20T04:00:48.283Z] To: 919947551255@c.us
+[2025-07-20T04:00:48.285Z] Body: show me products
+[2025-07-20T04:00:48.385Z] Chat type: Private
+[2025-07-20T04:00:48.955Z] Extracted customer name: Anas
+[2025-07-20T04:00:51.020Z] LLM response: Hi Anas,
+Here at Chembys, we have a wonderful selection of products! You can take a look at our {{PRODUCT_LIST}} to find what suits your needs. Let me know if you need any assistance. 😊
+[2025-07-20T04:01:01.689Z] --- New message received ---
+[2025-07-20T04:01:01.691Z] From: 919847168947@c.us
+[2025-07-20T04:01:01.693Z] To: 919947551255@c.us
+[2025-07-20T04:01:01.695Z] Body: melasma
+[2025-07-20T04:01:01.778Z] Chat type: Private
+[2025-07-20T04:01:02.069Z] Extracted customer name: Anas
+[2025-07-20T04:01:03.919Z] LLM response: For melasma concerns, Anas, we have a great combo that might be perfect for you. Here's what we suggest:
+
+{{COMBO_SUGGESTIONS}}
+
+If you have any questions or need further assistance, feel free to ask! 😊
+[2025-07-20T04:01:41.434Z] --- New message received ---
+[2025-07-20T04:01:41.436Z] From: 919847168947@c.us
+[2025-07-20T04:01:41.438Z] To: 919947551255@c.us
+[2025-07-20T04:01:41.440Z] Body: i need kasthuri mankal
+[2025-07-20T04:01:41.506Z] Chat type: Private
+[2025-07-20T04:01:41.803Z] Extracted customer name: Anas
+[2025-07-20T04:01:43.858Z] LLM response: Great choice, Anas! How many units of Kasthuri Manjal would you like to order?
+[2025-07-20T04:01:49.708Z] --- New message received ---
+[2025-07-20T04:01:49.710Z] From: 919847168947@c.us
+[2025-07-20T04:01:49.712Z] To: 919947551255@c.us
+[2025-07-20T04:01:49.714Z] Body: 1
+[2025-07-20T04:01:49.798Z] Chat type: Private
+[2025-07-20T04:01:50.112Z] Extracted customer name: Anas
+[2025-07-20T04:01:52.480Z] LLM response: Got it, one unit of Kasthuri Manjal. Could you please provide your full name, mobile number, and address with the pincode? This will help us arrange the delivery for you. 😊
+[2025-07-20T04:02:04.469Z] --- New message received ---
+[2025-07-20T04:02:04.471Z] From: 919847168947@c.us
+[2025-07-20T04:02:04.474Z] To: 919947551255@c.us
+[2025-07-20T04:02:04.476Z] Body: Anas K K'
+[2025-07-20T04:02:04.560Z] Chat type: Private
+[2025-07-20T04:02:05.050Z] Extracted customer name: Anas
+[2025-07-20T04:02:06.594Z] LLM response: Thanks, Anas! Now, could you please share your mobile number and address with the pincode? 😊
+[2025-07-20T04:02:16.646Z] --- New message received ---
+[2025-07-20T04:02:16.648Z] From: 919847168947@c.us
+[2025-07-20T04:02:16.650Z] To: 919947551255@c.us
+[2025-07-20T04:02:16.652Z] Body: 9847168947
+[2025-07-20T04:02:16.760Z] Chat type: Private
+[2025-07-20T04:02:17.034Z] Extracted customer name: Anas
+[2025-07-20T04:02:18.295Z] LLM response: Thank you, Anas! Could you please provide your full address along with the pincode to proceed? 😊
+[2025-07-20T04:02:36.003Z] --- New message received ---
+[2025-07-20T04:02:36.005Z] From: 919847168947@c.us
+[2025-07-20T04:02:36.007Z] To: 919947551255@c.us
+[2025-07-20T04:02:36.009Z] Body: Konnankudy, Kakkanad 683550
+[2025-07-20T04:02:36.109Z] Chat type: Private
+[2025-07-20T04:02:36.379Z] Extracted customer name: Anas
+[2025-07-20T04:02:38.846Z] LLM response: Thanks, Anas! Before we proceed, would you prefer Google Pay (no extra charge) or Cash on Delivery (+₹30)? 😊
+[2025-07-20T04:02:46.146Z] --- New message received ---
+[2025-07-20T04:02:46.149Z] From: 919847168947@c.us
+[2025-07-20T04:02:46.151Z] To: 919947551255@c.us
+[2025-07-20T04:02:46.152Z] Body: cod
+[2025-07-20T04:02:46.252Z] Chat type: Private
+[2025-07-20T04:02:46.631Z] Extracted customer name: Anas
+[2025-07-20T04:02:48.890Z] LLM response: Thanks Anas! Here are the details you shared:
+📍 Name: Anas K K
+📞 Phone: 9847168947
+🏠 Address: Konnankudy, Kakkanad – 683550
+🛍️ Product: Kasthuri Manjal × 1
+🚚 Delivery Method: Cash on Delivery (₹30 extra)
+
+Please confirm if everything is correct so I can place your order 😊
+[2025-07-20T04:03:00.790Z] --- New message received ---
+[2025-07-20T04:03:00.792Z] From: 919847168947@c.us
+[2025-07-20T04:03:00.794Z] To: 919947551255@c.us
+[2025-07-20T04:03:00.796Z] Body: yes
+[2025-07-20T04:03:00.879Z] Chat type: Private
+[2025-07-20T04:03:01.791Z] Extracted customer name: Anas
+[2025-07-20T04:03:04.453Z] LLM response: Thanks for confirming your details, Anas!  
+
+📍 Name: Anas K K  
+📞 Phone: 9847168947  
+🏠 Address: Konnankudy, Kakkanad  
+
+🛍️ Order Summary:  
+• Kasthuri Manjal × 1 = ₹497  
+
+🔒 COD Charge: ₹30  
+💰 Total Amount: ₹527 (COD)  
+
+No need to pay now. Please keep ₹527 ready at the time of delivery 📦
+
+If you need any further assistance, feel free to let me know! 😊
+[2025-07-20T04:08:56.721Z] Client is ready! You should now be able to send and receive messages.
+[2025-07-20T04:09:09.377Z] --- New message received ---
+[2025-07-20T04:09:09.380Z] From: 919847168947@c.us
+[2025-07-20T04:09:09.383Z] To: 919947551255@c.us
+[2025-07-20T04:09:09.385Z] Body: hi
+[2025-07-20T04:09:09.446Z] Chat type: Private
+[2025-07-20T04:09:10.249Z] Extracted customer name: Anas
+[2025-07-20T04:09:19.129Z] --- New message received ---
+[2025-07-20T04:09:19.132Z] From: 919847168947@c.us
+[2025-07-20T04:09:19.135Z] To: 919947551255@c.us
+[2025-07-20T04:09:19.137Z] Body: need to place order
+[2025-07-20T04:09:19.230Z] Chat type: Private
+[2025-07-20T04:09:19.520Z] Extracted customer name: Anas
+[2025-07-20T04:09:22.262Z] LLM response: Hello Anas! 🌿
+I'd be happy to help you place an order. Could you please let me know which product you'd like to order first?
+[2025-07-20T04:09:26.915Z] --- New message received ---
+[2025-07-20T04:09:26.917Z] From: 919846818557-1486198557@g.us
+[2025-07-20T04:09:26.919Z] To: 919947551255@c.us
+[2025-07-20T04:09:26.920Z] Body: 
+[2025-07-20T04:09:26.974Z] Chat type: Group
+[2025-07-20T04:09:26.977Z] Not a direct chat. No reply sent.
+[2025-07-20T04:09:28.502Z] --- New message received ---
+[2025-07-20T04:09:28.505Z] From: 919846818557-1486198557@g.us
+[2025-07-20T04:09:28.507Z] To: 919947551255@c.us
+[2025-07-20T04:09:28.508Z] Body: 
+[2025-07-20T04:09:28.557Z] Chat type: Group
+[2025-07-20T04:09:28.559Z] Not a direct chat. No reply sent.
+[2025-07-20T04:09:29.139Z] --- New message received ---
+[2025-07-20T04:09:29.142Z] From: 919846818557-1486198557@g.us
+[2025-07-20T04:09:29.145Z] To: 919947551255@c.us
+[2025-07-20T04:09:29.147Z] Body: 
+[2025-07-20T04:09:29.194Z] Chat type: Group
+[2025-07-20T04:09:29.197Z] Not a direct chat. No reply sent.
+[2025-07-20T04:09:29.641Z] --- New message received ---
+[2025-07-20T04:09:29.643Z] From: 919846818557-1486198557@g.us
+[2025-07-20T04:09:29.645Z] To: 919947551255@c.us
+[2025-07-20T04:09:29.646Z] Body: 
+[2025-07-20T04:09:29.711Z] Chat type: Group
+[2025-07-20T04:09:29.714Z] Not a direct chat. No reply sent.
+[2025-07-20T04:09:35.871Z] --- New message received ---
+[2025-07-20T04:09:35.874Z] From: 919847168947@c.us
+[2025-07-20T04:09:35.876Z] To: 919947551255@c.us
+[2025-07-20T04:09:35.878Z] Body: ethoke products?
+[2025-07-20T04:09:35.971Z] Chat type: Private
+[2025-07-20T04:09:36.347Z] Extracted customer name: Anas
+[2025-07-20T04:09:37.993Z] LLM response: Hello Anas! 😊
+Here are the products we have available:
+{{PRODUCT_LIST}}
+Please let me know which product you are interested in ordering.
+[2025-07-20T04:09:50.301Z] --- New message received ---
+[2025-07-20T04:09:50.304Z] From: 919847168947@c.us
+[2025-07-20T04:09:50.306Z] To: 919947551255@c.us
+[2025-07-20T04:09:50.308Z] Body: enuk carrot oil venam
+[2025-07-20T04:09:50.388Z] Chat type: Private
+[2025-07-20T04:09:50.786Z] Extracted customer name: Anas
+[2025-07-20T04:09:52.018Z] LLM response: That's great, Anas! 🥕
+How many bottles of Carrot Oil would you like to order?
+[2025-07-20T04:09:59.028Z] --- New message received ---
+[2025-07-20T04:09:59.030Z] From: 919847168947@c.us
+[2025-07-20T04:09:59.032Z] To: 919947551255@c.us
+[2025-07-20T04:09:59.034Z] Body: 3
+[2025-07-20T04:09:59.117Z] Chat type: Private
+[2025-07-20T04:09:59.403Z] Extracted customer name: Anas
+[2025-07-20T04:10:00.931Z] LLM response: Thank you, Anas! 🌿
+Could you please provide me with your:
+1. Full Name
+2. Mobile Number
+3. Address with Pincode
+4. Preferred Delivery Method (COD or Google Pay)
+[2025-07-20T04:10:14.871Z] --- New message received ---
+[2025-07-20T04:10:14.874Z] From: 919847168947@c.us
+[2025-07-20T04:10:14.876Z] To: 919947551255@c.us
+[2025-07-20T04:10:14.878Z] Body: Anas K K
+[2025-07-20T04:10:14.972Z] Chat type: Private
+[2025-07-20T04:10:15.365Z] Extracted customer name: Anas
+[2025-07-20T04:10:17.116Z] LLM response: Thank you, Anas! 🌼
+Could you please provide your mobile number and address with the pincode for delivery?
+[2025-07-20T04:10:29.936Z] --- New message received ---
+[2025-07-20T04:10:29.939Z] From: 919847168947@c.us
+[2025-07-20T04:10:29.941Z] To: 919947551255@c.us
+[2025-07-20T04:10:29.943Z] Body: 9847168947
+[2025-07-20T04:10:30.034Z] Chat type: Private
+[2025-07-20T04:10:30.322Z] Extracted customer name: Anas
+[2025-07-20T04:10:31.740Z] LLM response: Thank you, Anas! 🌿
+Could you please provide your complete address with the pincode for delivery?
+[2025-07-20T04:10:55.492Z] --- New message received ---
+[2025-07-20T04:10:55.494Z] From: 919847168947@c.us
+[2025-07-20T04:10:55.496Z] To: 919947551255@c.us
+[2025-07-20T04:10:55.498Z] Body: Konnankudy House, Kakkanad 683550
+[2025-07-20T04:10:55.584Z] Chat type: Private
+[2025-07-20T04:10:55.916Z] Extracted customer name: Anas
+[2025-07-20T04:11:11.893Z] LLM response: Thank you, Anas! 🌼
+I see a slight mismatch in the pincode. The address you provided is in Kakkanad with pincode 683550. However, our records show that Kakkanad has a pincode of 682030. Could you please confirm the correct pincode for me?
+[2025-07-20T04:11:33.846Z] --- New message received ---
+[2025-07-20T04:11:33.848Z] From: 919847168947@c.us
+[2025-07-20T04:11:33.849Z] To: 919947551255@c.us
+[2025-07-20T04:11:33.850Z] Body: it is 683550
+[2025-07-20T04:11:33.942Z] Chat type: Private
+[2025-07-20T04:11:34.320Z] Extracted customer name: Anas
+[2025-07-20T04:11:36.065Z] LLM response: Thank you for confirming, Anas! 🌿
+Here is the summary of your order:
+📍 Name: Anas K K
+📞 Phone: 9847168947
+🏠 Address: Konnankudy House, Kakkanad 683550
+🛍️ Product: Carrot Oil × 3
+🚚 Delivery Method: COD
+
+Please confirm if the above details are correct so we can place your order 😊
+[2025-07-20T04:11:45.423Z] --- New message received ---
+[2025-07-20T04:11:45.425Z] From: 919847168947@c.us
+[2025-07-20T04:11:45.426Z] To: 919947551255@c.us
+[2025-07-20T04:11:45.428Z] Body: yes
+[2025-07-20T04:11:45.532Z] Chat type: Private
+[2025-07-20T04:11:45.891Z] Extracted customer name: Anas
+[2025-07-20T04:11:48.378Z] LLM response: Thank you for confirming, Anas! 🌼
+Your order has been successfully placed:
+📍 Name: Anas K K
+📞 Phone: 9847168947
+🏠 Address: Konnankudy House, Kakkanad 683550
+🛍️ Order: Carrot Oil × 3
+🚚 Delivery Method: COD
+
+No need to pay now. Please keep ₹1260 ready at the time of delivery. Your order will be on its way soon! 🚚
+
+Is there anything else I can assist you with today?
